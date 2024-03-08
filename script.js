@@ -40,7 +40,7 @@ function playGame() {
             console.log("Your Score: " + pCount + ". " + "Computer Score: " + cCount);
         } else if (result == "It's A Draw!") {
             console.log("Your Score: " + pCount + ". " + "Computer Score: " + cCount);
-        } else if (result="Invalid guess, please enter 'Rock', 'Paper', or 'Scissors'") {
+        } else if (result == "Invalid guess, please enter 'Rock', 'Paper', or 'Scissors'") {
             i--;
         }
     }
