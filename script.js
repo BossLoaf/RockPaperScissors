@@ -1,3 +1,27 @@
+let cScore = 0;
+let pScore = 0;
+
+const buttonRock = document.querySelector("#buttonRock");
+buttonRock.addEventListener("click", () => {
+    let playerSelection = "rock"
+    let computerSelection = getComputerChoice()
+    playRound(playerSelection, computerSelection);
+})
+
+const buttonPaper = document.querySelector("#buttonPaper");
+buttonPaper.addEventListener("click", () => {
+    let playerSelection = "paper"
+    let computerSelection = getComputerChoice()
+    playRound(playerSelection, computerSelection);
+})
+
+const buttonScissors = document.querySelector("#buttonScissors");
+buttonScissors.addEventListener("click", () => {
+    let playerSelection = "scissors"
+    let computerSelection = getComputerChoice()
+    playRound(playerSelection, computerSelection);
+})
+
 function getComputerChoice() {
     let num = Math.floor(Math.random() * 3) + 1;
     if (num == 1) {
@@ -11,49 +35,48 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection.toLowerCase() == computerSelection) {
-        return "It's a draw!";
+        const results = document.querySelector("#results");
+        const resultPara = document.createElement("p");
+        resultPara.classList.add("resultPara");
+        resultPara.textContent = "It's a draw! Player: " + pScore + ". Computer: " + cScore;
+        results.appendChild(resultPara);
+    
     } else if (playerSelection.toLowerCase() == "rock" && computerSelection == "scissors" || playerSelection.toLowerCase() == "scissors" && computerSelection == "paper" || playerSelection.toLowerCase() == "paper" && computerSelection == "rock") {
-        return "You Win!";
+        pScore++;
+        const results = document.querySelector("#results");
+        const resultPara = document.createElement("p");
+        resultPara.classList.add("resultPara");
+        if (pScore == 5) {
+            resultPara.textContent = "Final Result: You Win!  Player: " + pScore + ". Computer: " + cScore;
+            results.appendChild(resultPara);
+            pScore = 0;
+            cScore = 0;
+        } else {
+            resultPara.textContent = "You Win! Player: " + pScore + ". Computer: " + cScore;
+            results.appendChild(resultPara);
+        }
+        
     } else if (playerSelection.toLowerCase() == "rock" && computerSelection == "paper" || playerSelection.toLowerCase() == "scissors" && computerSelection == "rock" || playerSelection.toLowerCase() == "paper" && computerSelection == "scissors") {
-        return "You Lose!";
+        cScore++;
+        const results = document.querySelector("#results");
+        const resultPara = document.createElement("p");
+        resultPara.classList.add("resultPara");
+        if (cScore == 5) {
+            resultPara.textContent = "Final Result: You Lose!  Player: " + pScore + ". Computer: " + cScore;
+            results.appendChild(resultPara);
+            pScore = 0;
+            cScore = 0;
+        } else {
+            resultPara.textContent = "You Lose! Player: " + pScore + ". Computer: " + cScore;
+            results.appendChild(resultPara);
+        }
+       
+        
     } else if (playerSelection.toLowerCase() != "rock" && playerSelection.toLowerCase() != "paper" && playerSelection.toLowerCase() != "scissors") {
-        return "Invalid guess, please enter 'Rock', 'Paper', or 'Scissors'";
+        const results = document.querySelector("#results");
+        const resultPara = document.createElement("p");
+        resultPara.classList.add("resultPara");
+        resultPara.textContent = "Invalid guess, please enter 'Rock', 'Paper', or 'Scissors'";
+        results.appendChild(resultPara);
     };
 }
-
-
-function playGame() {
-    let cCount = 0
-    let pCount = 0
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Enter Rock, Paper, or Scissors");
-        let computerSelection = getComputerChoice();
-        let result = playRound(playerSelection, computerSelection);
-        console.log("You selected " + playerSelection);
-        console.log("The computer selected " + computerSelection);
-        console.log(result);
-        if (result == "You Lose!") {
-            cCount++;
-            console.log("Your Score: " + pCount + ". " + "Computer Score: " + cCount);
-        } else if (result == "You Win!") {
-            pCount++;
-            console.log("Your Score: " + pCount + ". " + "Computer Score: " + cCount);
-        } else if (result == "It's A Draw!") {
-            console.log("Your Score: " + pCount + ". " + "Computer Score: " + cCount);
-        } else if (result == "Invalid guess, please enter 'Rock', 'Paper', or 'Scissors'") {
-            i--;
-        }
-    }
-
-    if (pCount > cCount) {
-        console.log("Final Result: You Win!");
-    }
-    else if (pCount < cCount) {
-        console.log("Final Result: You Lose!");
-    } else {
-        console.log("It's A Draw!");
-    }
-}
-
-playGame();
-
